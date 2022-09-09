@@ -9,7 +9,6 @@ import sys
 import datetime
 import progressbar as pb
 import librosa
-import sys
 import numpy as np
 import matplotlib.pyplot as plt
 import librosa.display
@@ -19,7 +18,7 @@ np.set_printoptions(threshold=sys.maxsize)
 try:
     filename = sys.argv[1]
 except IndexError:
-    raise SystemExit(f"Usage: {sys.argv[0]} <audio file name>")
+    raise SystemExit(f'Usage: {sys.argv[0]} <audio file name>')
 
 print(f'\n *** Computing Spikes for: {filename} *** \n')
 
@@ -31,7 +30,7 @@ else: # Use file's sample rate
     Fs = sample_rate
 print(f'Sample Rate: {Fs}')
 
-print("Computing Spectrum:")
+print('Computing Spectrum:')
 
 n_fft = 1024  # frame length / FFT size. Larger FFT's can resolve narrower frequencies
               # (FFT phase info can be used to compute more accurate frequency, not needed and not done here)
@@ -43,12 +42,11 @@ t_samples = np.arange(clip.shape[0]) / Fs
 t_frames = np.arange(X.shape[1]) * hop_length / Fs
 f_hertz = np.fft.rfftfreq(n_fft, 1 / Fs)
 
-print("Length (H:M:S): ", str(datetime.timedelta(seconds=t_samples[-1])))
+print(f'Length (H:M:S): {datetime.timedelta(seconds=t_samples[-1])}')
 print('Time (seconds) of last sample: %.2f' % t_samples[-1])
 print('Time (seconds) of last frame:  %.2f' %t_frames[-1])
 print('Frequency (Hz) of last bin:   %d' % f_hertz[-1])
 print('Time (samples) :', len(t_samples))
-
 print('Number of frames : ', len(t_frames))
 print('Number of bins : ', len(f_hertz))
 
@@ -61,12 +59,11 @@ if False:
 maxFreq = 0
 maxE_Freq = 0
 maxE = 0
-curLine = ''
 errors = 0
 fundamental = 0
 fMaxE = 0 # fundamental max energy
 
-print("\nComputing Approx. Fundamental Frequency:")
+print('\nComputing Approx. Fundamental Frequency:')
 
 # Find approx. fundamental frequency first (initial tests were at 440Hz). Note FFT size will affect this estimate
 for f in pb.progressbar(range(2, len(t_frames)-1), redirect_stdout=True): # Skip 1st and last frames: can have normal spikes due to waveform cut in/out
