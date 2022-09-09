@@ -84,7 +84,7 @@ fMaxE = 0
 MaxAllowedFreq = fundamental*4
 EnergyThresh = 0.2
 
-print(f'Approx. Fundamental: {fundamental:.1f}Hz, Max Allowed Freq: {MaxAllowedFreq:.1f}Hz, Energy Error Threshold: {EnergyThresh:.1f}\n')
+print(f'Approx. Fundamental: {fundamental:.1f}Hz, Max Allowed Freq: {MaxAllowedFreq:.1f}Hz, Energy Error Threshold: {EnergyThresh:.1f}')
 
 print('\n*** STARTING Spike Analysis ***\n')
 
