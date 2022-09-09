@@ -2,7 +2,7 @@
 Compute Spikes for Audio Dropout Analysis and Debugging
 
 ## Installation:
-1. Install python 3 if not already installed
+1. Install pip3 python3 if not already installed
 2. Run ./install.sh
 
 ## Usage:
@@ -16,6 +16,27 @@ Compute Spikes for Audio Dropout Analysis and Debugging
 ./audio/input_short_clean.aif is an example that should pass with current settings in cs.py. This file had spikes / drop outs removed via spectral edits in Adobe Audition, however there are still some artifacts. Increasing the FFT to 2048 will cause this file to fail. Test with:
  ```   
     ./cs.sh ./audio/input_short_clean.aif
+
+ *** Computing Spikes for: ./audio/input_short_clean.aif *** 
+
+Sample Rate: 48000
+Computing Spectrum:
+Length (H:M:S):  0:00:03.695979
+Time (seconds) of last sample: 3.70
+Time (seconds) of last frame:  3.69
+Frequency (Hz) of last bin:   24000
+Time (samples) : 177408
+Number of frames :  347
+Number of bins :  513
+
+Computing Approx. Fundamental Frequency:
+100% (344 of 344) |####################################################################| Elapsed Time: 0:00:00 Time:  0:00:00
+Approx. Fundamental: 421.5, Max Allowed Freq: 1686.0, Energy Error Threshold: 0.2
+
+*** STARTING Spike Analysis ***
+
+100% (344 of 344) |####################################################################| Elapsed Time: 0:00:00 Time:  0:00:00
+[PASS]
 ```
 ./audio/input_short.aif is an example that should produce 3 errors. Test with:
  ```   
@@ -47,9 +68,6 @@ Error Time 0.928s: AveFreq: 23953.1Hz, MaxFreq: 24000.0Hz, MaxErrorEnergy: 2.9
 
 100% (348 of 348) |####################################################################| Elapsed Time: 0:00:00 Time:  0:00:00
 [FAIL]: Errors: 3
-
-
-
 ```
 
 Note the start and end of audio files can have spectral spikes due to waveform truncation, so the code ignores the first and last FFT frames.
