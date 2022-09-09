@@ -59,7 +59,7 @@ Number of bins :  513
 
 Computing Approx. Fundamental Frequency:
 100% (348 of 348) |####################################################################| Elapsed Time: 0:00:00 Time:  0:00:00
-Approx. Fundamental: 421.1, Max Allowed Freq: 1684.6, Energy Error Threshold: 0.2
+Approx. Fundamental: 421.1Hz, Max Allowed Freq: 1684.6Hz, Energy Error Threshold: 0.2
 
 *** STARTING Spike Analysis ***
 
