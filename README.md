@@ -1,5 +1,8 @@
-# ComputeSpikes
+# Compute Spikes
 Compute Spikes for Audio Dropout Analysis and Debugging
+
+## About
+Debugging audio drop outs can be challenging- with live mics/instruments it's not clear what are noises/clicks vs. hardware/software drop outs which sound like clicks or pops. By recording a sine wave, we can look for characterstic drop out spikes or other anomolies via FFT spectral analysis in an automated way.
 
 ## Installation:
 1. Install pip3 python3 if not already installed
@@ -68,8 +71,7 @@ Error Time 0.928s: AveFreq: 23953.1Hz, MaxFreq: 24000.0Hz, MaxErrorEnergy: 2.9
 
 100% (348 of 348) |####################################################################| Elapsed Time: 0:00:00 Time:  0:00:00
 [FAIL]: Errors: 3
-
-![Spectral Image](https://github.com/brightlandco/ComputeSpikes/blob/main/Images/input_short.png)
 ```
+![Spectral Image](https://github.com/brightlandco/ComputeSpikes/blob/main/Images/input_short.png)
 
 Note the start and end of audio files can have spectral spikes due to waveform truncation, so the code ignores the first and last FFT frames.
