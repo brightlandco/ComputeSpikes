@@ -71,7 +71,7 @@ print("\nComputing Approx. Fundamental Frequency:")
 # Find approx. fundamental frequency first (initial tests were at 440Hz). Note FFT size will affect this estimate
 for f in pb.progressbar(range(2, len(t_frames)-1), redirect_stdout=True): # Skip 1st and last frames: can have normal spikes due to waveform cut in/out
 #for f in range(2, len(t_frames)-1): # Skip 1st and last frames: can have normal spikes due to waveform cut in/out
-    for b in range(1, len(f_hertz)): #for each frame, we get list of bin values printed
+    for b in range(1, len(f_hertz)):
         e = np.abs(X[b, f])
         fr = f_hertz[b]
         if e > fMaxE:
@@ -93,7 +93,7 @@ for f in pb.progressbar(range(2, len(t_frames)-1), redirect_stdout=True): # Skip
 #for f in range(2, len(t_frames)-1): # Skip 1st and last frames: can have normal spikes due to waveform cut in/out
     hit = False
     aveFreqError = 0
-    for b in range(1, len(f_hertz)): #for each frame, we get list of bin values printed
+    for b in range(1, len(f_hertz)):
         e = np.abs(X[b, f])
         fr = f_hertz[b]
         if e > EnergyThresh and fr > MaxAllowedFreq:
@@ -115,7 +115,7 @@ for f in pb.progressbar(range(2, len(t_frames)-1), redirect_stdout=True): # Skip
 if errors:
     print(f'[FAIL]: Errors: {errors}')
     plt.figure(figsize=(14, 5))
-    librosa.display.specshow(Xdb, sr=Fs, x_axis='time', y_axis='hz') 
+    #librosa.display.specshow(Xdb, sr=Fs, x_axis='time', y_axis='hz') 
     librosa.display.specshow(Xdb, sr=Fs, x_axis='time', y_axis='log')
     plt.colorbar()
     plt.show()
