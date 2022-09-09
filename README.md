@@ -7,7 +7,7 @@ Compute Spikes for Audio Dropout Analysis and Debugging
 
 ## Usage:
 1. Record audio in your DAW, by sending a sine wave, e.g. 440Hz (A) into line in of your audio interface
-2. Run ./cs.sh <path to your audio file>
+2. Run ./cs.sh \<path to your audio file\>
 3. If no errors, PASS will be printed along with some stats
 4. If spikes or audio drop outs occured, error data will be printed along with a spectral graph
 
