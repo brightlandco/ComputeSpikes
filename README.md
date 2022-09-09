@@ -20,5 +20,36 @@ Compute Spikes for Audio Dropout Analysis and Debugging
 ./audio/input_short.aif is an example that should produce 3 errors. Test with:
  ```   
     ./cs.sh ./audio/input_short.aif
+
+ *** Computing Spikes for: ./audio/input_short.aif *** 
+
+Sample Rate: 48000
+Computing Spectrum:
+Length (H:M:S):  0:00:03.737938
+Time (seconds) of last sample: 3.74
+Time (seconds) of last frame:  3.73
+Frequency (Hz) of last bin:   24000
+Time (samples) : 179422
+Number of frames :  351
+Number of bins :  513
+
+Computing Approx. Fundamental Frequency:
+100% (348 of 348) |####################################################################| Elapsed Time: 0:00:00 Time:  0:00:00
+Approx. Fundamental: 421.1, Max Allowed Freq: 1684.6, Energy Error Threshold: 0.2
+
+*** STARTING Spike Analysis ***
+
+Error Time 0.245s: AveFreq: 2671.9Hz, MaxFreq: 2718.8Hz, MaxErrorEnergy: 0.5                                                 
+
+Error Time 0.501s: AveFreq: 9937.5Hz, MaxFreq: 9984.4Hz, MaxErrorEnergy: 1.2
+
+Error Time 0.928s: AveFreq: 23953.1Hz, MaxFreq: 24000.0Hz, MaxErrorEnergy: 2.9                                               
+
+100% (348 of 348) |####################################################################| Elapsed Time: 0:00:00 Time:  0:00:00
+[FAIL]: Errors: 3
+
+
+
 ```
+
 Note the start and end of audio files can have spectral spikes due to waveform truncation, so the code ignores the first and last FFT frames.
