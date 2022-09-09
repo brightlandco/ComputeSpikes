@@ -5,7 +5,7 @@ Compute Spikes for Audio Dropout Analysis and Debugging
 Debugging audio drop outs can be challenging- with live mics/instruments it's not clear what are noises/clicks vs. hardware/software drop outs which sound like clicks or pops. By recording a sine wave, we can look for characterstic drop out spikes or other anomolies via FFT spectral analysis in an automated way.
 
 ## Installation:
-1. Install pip3 python3 if not already installed
+1. Install pip3 & python3 if not already installed
 2. Run ./install.sh
 
 ## Usage:
