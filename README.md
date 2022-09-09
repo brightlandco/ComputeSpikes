@@ -64,11 +64,8 @@ Approx. Fundamental: 421.1, Max Allowed Freq: 1684.6, Energy Error Threshold: 0.
 *** STARTING Spike Analysis ***
 
 Error Time 0.245s: AveFreq: 2671.9Hz, MaxFreq: 2718.8Hz, MaxErrorEnergy: 0.5                                                 
-
 Error Time 0.501s: AveFreq: 9937.5Hz, MaxFreq: 9984.4Hz, MaxErrorEnergy: 1.2
-
-Error Time 0.928s: AveFreq: 23953.1Hz, MaxFreq: 24000.0Hz, MaxErrorEnergy: 2.9                                               
-
+Error Time 0.928s: AveFreq: 23953.1Hz, MaxFreq: 24000.0Hz, MaxErrorEnergy: 2.9
 100% (348 of 348) |####################################################################| Elapsed Time: 0:00:00 Time:  0:00:00
 [FAIL]: Errors: 3
 ```

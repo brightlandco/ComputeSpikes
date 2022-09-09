@@ -110,7 +110,7 @@ for f in pb.progressbar(range(2, len(t_frames)-1), redirect_stdout=True): # Skip
             hit = True 
     if hit:
         errors += 1
-        print(f'Error Time {t_frames[f]:4.3f}s: AveFreq: {aveFreqError:.1f}Hz, MaxFreq: {maxFreq:.1f}Hz, MaxErrorEnergy: {maxE:.1f}\n')
+        print(f'Error Time {t_frames[f]:4.3f}s: AveFreq: {aveFreqError:.1f}Hz, MaxFreq: {maxFreq:.1f}Hz, MaxErrorEnergy: {maxE:.1f}')
 
 if errors:
     print(f'[FAIL]: Errors: {errors}')
