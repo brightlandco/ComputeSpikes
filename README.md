@@ -9,7 +9,7 @@ Debugging audio drop outs can be challenging- with live mics/instruments it's no
 2. Run ./install.sh
 
 ## Usage:
-1. Record audio in your DAW, by sending a sine wave, e.g. 440Hz (A) into line in of your audio interface
+1. Record audio in your DAW, by sending a sine wave, e.g. 440Hz (A) into line in of your audio interface. You can use something like Adobe Audition or a DAW plugin to generate a sine wave, then play the sine wave from another audio interface line out into line in of the audio interface being tested. Levels: -12 to -6dB on the recording interface: as long as not clipping and well above the noise floor should produce good results
 2. Run ./cs.sh \<path to your recorded sine wave audio file\>
 3. If no errors, PASS will be printed along with some stats
 4. If spikes or audio drop outs occured, error data will be printed along with a spectral graph
