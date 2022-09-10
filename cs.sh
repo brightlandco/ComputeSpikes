@@ -1,1 +1,1 @@
-python3 cs.py $1
+python3 cs.py "$1"

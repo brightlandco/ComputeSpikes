@@ -32,6 +32,8 @@ print(f'Sample Rate: {Fs}')
 
 print('Computing Spectrum:')
 
+clip = librosa.util.normalize(clip)
+
 n_fft = 1024  # frame length / FFT size. Larger FFT's can resolve narrower frequencies
               # (FFT phase info can be used to compute more accurate frequency, not needed and not done here)
 hop_length = 512
@@ -79,7 +81,7 @@ for f in pb.progressbar(range(2, len(t_frames)-1), redirect_stdout=True): # Skip
                 fundamental = (fr + fundamental)*0.5
 fMaxE = 0
 MaxAllowedFreq = fundamental*4
-EnergyThresh = 0.2
+EnergyThresh = 0.15
 
 print(f'Approx. Fundamental: {fundamental:.1f}Hz, Max Allowed Freq: {MaxAllowedFreq:.1f}Hz, Energy Error Threshold: {EnergyThresh:.1f}')
 
@@ -107,15 +109,18 @@ for f in pb.progressbar(range(2, len(t_frames)-1), redirect_stdout=True): # Skip
             hit = True 
     if hit:
         errors += 1
-        print(f'Error Time {t_frames[f]:4.3f}s: AveFreq: {aveFreqError:.1f}Hz, MaxFreq: {maxFreq:.1f}Hz, MaxErrorEnergy: {maxE:.1f}')
+        errorTime = t_frames[f]
+        errorTimeStr = datetime.timedelta(seconds=errorTime)
+        print(f'Error Time {errorTimeStr}: AveFreq: {aveFreqError:.1f}Hz, MaxFreq: {maxFreq:.1f}Hz, MaxErrorEnergy: {maxE:.3f}')
 
 if errors:
     print(f'[FAIL]: Errors: {errors}')
-    plt.figure(figsize=(14, 5))
-    #librosa.display.specshow(Xdb, sr=Fs, x_axis='time', y_axis='hz') 
-    librosa.display.specshow(Xdb, sr=Fs, x_axis='time', y_axis='log')
-    plt.colorbar()
-    plt.show()
 else:
     print('[PASS]')
 print()
+
+plt.figure(figsize=(14, 5))
+#librosa.display.specshow(Xdb, sr=Fs, x_axis='time', y_axis='hz') 
+librosa.display.specshow(Xdb, sr=Fs, x_axis='time', y_axis='log')
+plt.colorbar()
+plt.show()
