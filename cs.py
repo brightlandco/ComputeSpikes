@@ -67,8 +67,10 @@ fMaxE = 0 # fundamental max energy
 
 print('\nComputing Approx. Fundamental Frequency:')
 
+SkipFrames = 4
+
 # Find approx. fundamental frequency first (initial tests were at 440Hz). Note FFT size will affect this estimate
-for f in pb.progressbar(range(2, len(t_frames)-1), redirect_stdout=True): # Skip 1st and last frames: can have normal spikes due to waveform cut in/out
+for f in pb.progressbar(range(2, len(t_frames)-SkipFrames), redirect_stdout=True): # Skip 1st and last frames: can have normal spikes due to waveform cut in/out
 #for f in range(2, len(t_frames)-1): # Skip 1st and last frames: can have normal spikes due to waveform cut in/out
     for b in range(1, len(f_hertz)):
         e = np.abs(X[b, f])
@@ -89,11 +91,11 @@ print('\n*** STARTING Spike Analysis ***\n')
 
 NumBins = len(f_hertz)
 totalSumE = 0
-NumFrames = len(t_frames)-2
+NumFrames = len(t_frames) - SkipFrames - 1
 sumEFrames = np.tile(0.0,NumFrames)
 i = 0
 print('Summing frame energies:')
-for f in pb.progressbar(range(2, len(t_frames)-1), redirect_stdout=True): # Skip 1st and last frames: can have normal spikes due to waveform cut in/out
+for f in pb.progressbar(range(2, len(t_frames)-SkipFrames), redirect_stdout=True): # Skip 1st and last frames: can have normal spikes due to waveform cut in/out
     sumE = 0
     for b in range(1, NumBins):
         e = np.abs(X[b, f])
@@ -111,7 +113,7 @@ i = 0
 energyErrors = 0
 maxErrorSumEFrames = 0
 print('Checking frame delta energy from average and computing standard deviation:')
-for f in pb.progressbar(range(2, len(t_frames)-1), redirect_stdout=True): # Skip 1st and last frames: can have normal spikes due to waveform cut in/out
+for f in pb.progressbar(range(2, len(t_frames)-SkipFrames), redirect_stdout=True): # Skip 1st and last frames: can have normal spikes due to waveform cut in/out
     deltaFrameESqr = np.square(sumEFrames[i] - AveFrameE)
     sumDeltaFrameESqr += deltaFrameESqr
     if (deltaFrameESqr > MaxDeltaFrameESqr):
@@ -129,7 +131,7 @@ print(f'Energy Standard Deviation: {standardDev:.1f}, MaxErrorFrameE/SD: {maxErr
 
 print('Checking for energy / frequency spikes:')
 #for f in range(1, len(t_frames)):
-for f in pb.progressbar(range(2, len(t_frames)-1), redirect_stdout=True): # Skip 1st and last frames: can have normal spikes due to waveform cut in/out
+for f in pb.progressbar(range(2, len(t_frames)-SkipFrames), redirect_stdout=True): # Skip 1st and last frames: can have normal spikes due to waveform cut in/out
 #for f in range(2, len(t_frames)-1): # Skip 1st and last frames: can have normal spikes due to waveform cut in/out
     hit = False
     aveFreqError = 0

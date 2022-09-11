@@ -8,6 +8,16 @@ Debugging audio drop outs can be challenging- with live mics/instruments it's no
 1. Install pip3 & python3 if not already installed
 2. Run ./install.sh
 
+## MacOS 12.5.x, M1 Mac (Specific to latest versions on 9/10/22, e.g. python 3.10 is version installed)
+1. Install XCode and Commandline tools from Apple App Store
+2. Install latest version of python: https://www.python.org/downloads/
+3. Install Homebrew: https://brew.sh
+4. Install libsndfile: brew install libsndfile
+5. From the terminal:
+   - sudo mkdir /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/_soundfile_data
+   - sudo cp /opt/homebrew/lib/libsndfile.dylib /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/_soundfile_data
+6. Run ./install.sh
+
 ## Usage:
 1. Record audio in your DAW, by sending a sine wave, e.g. 440Hz (A) into line in of your audio interface. You can use something like Adobe Audition or a DAW plugin to generate a sine wave, then play the sine wave from another audio interface line out into line in of the audio interface being tested. Levels: -12 to -6dB on the recording interface: as long as not clipping and well above the noise floor should produce good results
 2. Run ./cs.sh \<path to your recorded sine wave audio file\>
