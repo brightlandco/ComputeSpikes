@@ -106,7 +106,7 @@ for f in pb.progressbar(range(1, NumFrames), redirect_stdout=True):
 AveFrameE = totalSumE / NumFrames
 print(f'Ave. Frame Energy: {AveFrameE}')
 
-MaxDeltaFrameESqr = np.square(3.0) # Raise this number to e.g. 10 if not capture a pure sign wave (e.g. running analog sim / effects)
+MaxDeltaFrameESqr = np.square(3.0) # Raise this number to e.g. 10 if not capturing a clean sine wave (e.g. running analog sim / effects)
 sumDeltaFrameESqr = 0
 i = 0
 energyErrors = 0
@@ -126,7 +126,7 @@ for f in pb.progressbar(range(1, NumFrames), redirect_stdout=True):
     i += 1
 
 standardDev = np.sqrt(sumDeltaFrameESqr/NumFrames)
-print(f'Energy Standard Deviation: {standardDev:.1f}, MaxErrorFrameE/SD: {maxErrorSumEFrames/standardDev:.1f}')
+print(f'Energy Standard Deviation: {standardDev:.3f}, MaxErrorFrameE/SD: {maxErrorSumEFrames/standardDev:.1f}')
 
 print('Checking for energy / frequency spikes:')
 for f in pb.progressbar(range(1, NumFrames), redirect_stdout=True):
