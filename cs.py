@@ -67,11 +67,10 @@ fMaxE = 0 # fundamental max energy
 
 print('\nComputing Approx. Fundamental Frequency:')
 
-SkipFrames = 4
+SkipFrames = 8
 
 # Find approx. fundamental frequency first (initial tests were at 440Hz). Note FFT size will affect this estimate
-for f in pb.progressbar(range(2, len(t_frames)-SkipFrames), redirect_stdout=True): # Skip 1st and last frames: can have normal spikes due to waveform cut in/out
-#for f in range(2, len(t_frames)-1): # Skip 1st and last frames: can have normal spikes due to waveform cut in/out
+for f in pb.progressbar(range(2, len(t_frames)-SkipFrames), redirect_stdout=True):
     for b in range(1, len(f_hertz)):
         e = np.abs(X[b, f])
         fr = f_hertz[b]
@@ -91,14 +90,14 @@ print('\n*** STARTING Spike Analysis ***\n')
 
 NumBins = len(f_hertz)
 totalSumE = 0
-NumFrames = len(t_frames) - SkipFrames - 1
+NumFrames = len(t_frames) - SkipFrames - 1 # Skip 1st and last frames (SkipFrames): can have normal spikes due to waveform cut in/out
 sumEFrames = np.tile(0.0,NumFrames)
 i = 0
 print('Summing frame energies:')
-for f in pb.progressbar(range(2, len(t_frames)-SkipFrames), redirect_stdout=True): # Skip 1st and last frames: can have normal spikes due to waveform cut in/out
+for f in pb.progressbar(range(1, NumFrames), redirect_stdout=True):
     sumE = 0
     for b in range(1, NumBins):
-        e = np.abs(X[b, f])
+        e = np.abs(X[b, f+1])
         sumE += e
     totalSumE += sumE
     sumEFrames[i] = sumE
@@ -107,22 +106,22 @@ for f in pb.progressbar(range(2, len(t_frames)-SkipFrames), redirect_stdout=True
 AveFrameE = totalSumE / NumFrames
 print(f'Ave. Frame Energy: {AveFrameE}')
 
-MaxDeltaFrameESqr = np.square(10.0)
+MaxDeltaFrameESqr = np.square(3.0) # Raise this number to e.g. 10 if not capture a pure sign wave (e.g. running analog sim / effects)
 sumDeltaFrameESqr = 0
 i = 0
 energyErrors = 0
 maxErrorSumEFrames = 0
 print('Checking frame delta energy from average and computing standard deviation:')
-for f in pb.progressbar(range(2, len(t_frames)-SkipFrames), redirect_stdout=True): # Skip 1st and last frames: can have normal spikes due to waveform cut in/out
+for f in pb.progressbar(range(1, NumFrames), redirect_stdout=True):
     deltaFrameESqr = np.square(sumEFrames[i] - AveFrameE)
     sumDeltaFrameESqr += deltaFrameESqr
     if (deltaFrameESqr > MaxDeltaFrameESqr):
-        errorTime = t_frames[f]
+        errorTime = t_frames[f+1]
         errorTimeStr = datetime.timedelta(seconds=errorTime)
         deltaFrameE = np.sqrt(deltaFrameESqr)
         if deltaFrameE > maxErrorSumEFrames:
             maxErrorSumEFrames = deltaFrameE
-        print(f'DeltaE Error: {errorTimeStr} : {deltaFrameE:.1f}')
+        print(f'*** DeltaE Error: {errorTimeStr} : {deltaFrameE:.1f}')
         energyErrors += 1
     i += 1
 
@@ -130,13 +129,11 @@ standardDev = np.sqrt(sumDeltaFrameESqr/NumFrames)
 print(f'Energy Standard Deviation: {standardDev:.1f}, MaxErrorFrameE/SD: {maxErrorSumEFrames/standardDev:.1f}')
 
 print('Checking for energy / frequency spikes:')
-#for f in range(1, len(t_frames)):
-for f in pb.progressbar(range(2, len(t_frames)-SkipFrames), redirect_stdout=True): # Skip 1st and last frames: can have normal spikes due to waveform cut in/out
-#for f in range(2, len(t_frames)-1): # Skip 1st and last frames: can have normal spikes due to waveform cut in/out
+for f in pb.progressbar(range(1, NumFrames), redirect_stdout=True):
     hit = False
     aveFreqError = 0
     for b in range(1, len(f_hertz)):
-        e = np.abs(X[b, f])
+        e = np.abs(X[b, f+1])
         fr = f_hertz[b]
         if e > EnergyThresh and fr > MaxAllowedFreq:
             if aveFreqError == 0:
@@ -152,9 +149,9 @@ for f in pb.progressbar(range(2, len(t_frames)-SkipFrames), redirect_stdout=True
             hit = True 
     if hit:
         errors += 1
-        errorTime = t_frames[f]
+        errorTime = t_frames[f+1]
         errorTimeStr = datetime.timedelta(seconds=errorTime)
-        print(f'Error Time {errorTimeStr}: AveFreq: {aveFreqError:.1f}Hz, MaxFreq: {maxFreq:.1f}Hz, MaxErrorEnergy: {maxE:.3f}')
+        print(f'*** Error Time {errorTimeStr}: AveFreq: {aveFreqError:.1f}Hz, MaxFreq: {maxFreq:.1f}Hz, MaxErrorEnergy: {maxE:.3f}')
 
 if errors or energyErrors:
     print(f'[FAIL]: Errors: {errors}, Energy Errors: {energyErrors}')
